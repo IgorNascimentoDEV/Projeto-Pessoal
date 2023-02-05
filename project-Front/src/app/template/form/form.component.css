@@ -1,0 +1,12 @@
+form{
+  background-color: rgb(46, 172, 245);
+  padding: 15px;
+  opacity: 0.7;
+  border-radius: 5px;
+  padding-left: 30%;
+}
+
+button{
+  margin-top: 20px;
+  margin-left: 38%;
+}
