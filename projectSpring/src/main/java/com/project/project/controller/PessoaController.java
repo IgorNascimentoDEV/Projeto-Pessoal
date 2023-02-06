@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.project.Resopitory.PessoaRepository;
@@ -31,13 +33,13 @@ public class PessoaController {
 	private PessoaRepository pessoaRepository;
 
 
-	@GetMapping("/pessoa")
+	@GetMapping
 	public List<Pessoa> getAll(){
 		return pessoaRepository.findAll();
 		
 	}
 	
-	@GetMapping("/pessoa/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<Pessoa> getSalaById(@PathVariable(value="id") Long id) throws ResourceNotFoundException{
 		
 		Pessoa pessoa = pessoaRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Sala nao encontrada "+id));
@@ -46,13 +48,14 @@ public class PessoaController {
 		
 	}
 	
-	@PostMapping("/pessoa")
-	public Pessoa createPessoa(@Validated @RequestBody Pessoa pessoa) {
+	@PostMapping
+    @ResponseStatus(code = HttpStatus.CREATED)
+	public Pessoa createPessoa(@RequestBody Pessoa pessoa) {
 		return pessoaRepository.save(pessoa);
 	}
 	
-	@PutMapping("/pessoa/{id}")
-	public ResponseEntity<Pessoa> updateSala(@PathVariable(value = "id") Long id, @Validated @RequestBody Pessoa pessoaDetalhes) throws ResourceNotFoundException{
+	@PutMapping("/{id}")
+	public ResponseEntity<Pessoa> updateSala(@PathVariable(value = "id") Long id, @RequestBody Pessoa pessoaDetalhes) throws ResourceNotFoundException{
 		Pessoa pessoa = pessoaRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Pessoa não encontrada"+id));
 		
 		pessoa.setNome(pessoaDetalhes.getNome());
@@ -64,7 +67,7 @@ public class PessoaController {
 		return ResponseEntity.ok(updatePessoa);
 	}
 	
-	@DeleteMapping("/pessoa/{id}")
+	@DeleteMapping("/{id}")
 	public Map<String, Boolean> deletePessoa(@PathVariable(value="id") Long id ) throws ResourceNotFoundException{
 		
 		Pessoa pessoa = pessoaRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Pessoa não encontrada"+id));

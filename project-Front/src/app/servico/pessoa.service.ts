@@ -11,7 +11,8 @@ import { Data } from '../module/data';
   providedIn: 'root'
 })
 export class PessoaService {
- API: string = "http://localhost:3000/dados"
+ API: string = "http://localhost:8087/api/v1"
+
   constructor(private http:HttpClient) { }
 
   getAll() : Observable<Data[]> {

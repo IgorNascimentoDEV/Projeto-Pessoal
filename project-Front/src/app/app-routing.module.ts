@@ -8,7 +8,7 @@ import { ListComponent } from './template/list/list.component';
 
 const routes: Routes = [
   {path:'cadastro', component: FormComponent},
-  {path:'list', component:ListComponent}
+  {path:'pessoa', component:ListComponent}
 ];
 
 @NgModule({
